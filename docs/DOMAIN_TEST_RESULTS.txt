@@ -1,0 +1,20 @@
+PASS valid customer
+PASS invalid email
+PASS invalid phone
+PASS name maximum length
+PASS blank name
+PASS valid opportunity
+PASS zero opportunity amount
+PASS probability upper bound
+PASS probability lower bound
+PASS active close date in past
+PASS stage/status consistency
+PASS required opportunity customer
+PASS past planned follow-up
+PASS today follow-up
+PASS lead contact transition
+PASS lead qualification transition
+PASS skip qualification rejected
+PASS ordinary conversion status rejected
+PASS converted lead terminal
+19 domain checks passed.

@@ -1,0 +1,19 @@
+@model RecordDto
+@{ ViewData["Title"]=Model.Name;var history=(List<AuditLog>)ViewBag.History; }
+<div class="eyebrow">@Model.Kind / record details</div><div class="toolbar"><h1>@Model.Name</h1><a class="btn btn-primary" href="/crm/@Model.Kind/@Model.Id/edit">Edit record</a></div><div class="panel"><dl class="row details">
+@{
+ var common=new[]{"Id","Name","Status","AssignedTo","CreatedDate","Notes"};
+ var specific=Model.Kind switch {
+ "customers"=>new[]{"CustomerCode","Email","Phone","CompanyName","Address","City","State"},
+ "leads"=>new[]{"LeadCode","Email","Phone","CompanyName","Source","Priority","ExpectedValue","ConvertedDate","ConvertedCustomerId"},
+ "opportunities"=>new[]{"CustomerId","LeadId","Amount","Probability","Stage","ExpectedCloseDate","ClosedDate","Source"},
+ "followups"=>new[]{"CustomerId","LeadId","OpportunityId","FollowUpDate","FollowUpType"},
+ _=>new[]{"CustomerId","LeadId","ActivityDate","ActivityType"}};
+}
+@foreach(var name in common.Concat(specific)){var value=typeof(RecordDto).GetProperty(name)!.GetValue(Model);if(value!=null && value.ToString()!=""){<div class="col-md-4"><dt>@name</dt><dd>@value</dd></div>}}
+</dl><div class="d-flex gap-3">
+@if(Model.Kind=="leads" && Model.Status=="Qualified"){<form method="post" asp-action="Convert" asp-route-kind="leads" asp-route-id="@Model.Id" data-confirm="Convert this lead into a customer and opportunity?"><input name="version" type="hidden" value="@Model.Version"/><button class="btn btn-primary">Convert lead</button></form>}
+<form method="post" asp-action="Delete" asp-route-kind="@Model.Kind" asp-route-id="@Model.Id" data-confirm="Delete this record? This cannot be undone."><input name="version" type="hidden" value="@Model.Version"/><button class="btn btn-outline-danger">Delete record</button></form><a class="btn btn-link" href="/crm/@Model.Kind">Back to list</a></div></div>
+<div class="panel mt-4"><h2>Record history</h2><p class="text-muted small">The most recent 100 changes to this record.</p>@foreach(var a in history){<details class="border-bottom py-2"><summary>@a.CreatedDate.ToString("u") · @a.Action · @a.UserId</summary><div class="row"><div class="col-md-6"><strong>Before</strong><pre>@a.OldValue</pre></div><div class="col-md-6"><strong>After</strong><pre>@a.NewValue</pre></div></div></details>}</div>
+
+<div class="panel mt-4"><h2>Related opportunities & activities</h2>@foreach(var related in (List<RecordDto>)ViewBag.Related){<div class="border-bottom py-2"><a href="/crm/@related.Kind/@related.Id">@related.Name</a> · @related.Kind · @related.Status</div>}</div>

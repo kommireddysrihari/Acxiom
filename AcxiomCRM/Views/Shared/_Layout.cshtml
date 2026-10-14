@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>@ViewData["Title"] · AcxiomCRM</title>
+<link rel="stylesheet" href="/vendor/bootstrap.min.css"/><link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/></head>
+<body><div class="app-shell"><aside class="sidebar"><a class="brand" href="/">a<span>AcxiomCRM</span></a><div class="nav-caption">SALES WORKSPACE</div>
+@if(User.Identity?.IsAuthenticated==true){
+<nav aria-label="Main navigation"><a href="/">Overview</a>@foreach(var kind in Modules.All){<a href="/crm/@kind">@(kind=="followups"?"Follow-ups":System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(kind))</a>}<a href="/Reports">Reports</a>
+@if(User.IsInRole(Roles.Admin)){<div class="nav-caption">ADMINISTRATION</div><a href="/Admin">Users & roles</a><a href="/Admin/Audit">Audit log</a>}
+</nav><div class="sidebar-bottom">Your scope<br/><strong>@(User.IsInRole(Roles.Admin)?"Administrator":User.IsInRole(Roles.Manager)?"Sales manager":"Sales executive")</strong></div>
+}else{<nav><a href="/Account/Login">Sign in</a><a href="/Account/Register">Register</a></nav>}
+</aside><div class="main-shell"><header class="topbar"><span>Customer relationships, clearly.</span><div>@User.Identity?.Name
+@if(User.Identity?.IsAuthenticated==true){<form asp-controller="Account" asp-action="Logout" method="post" class="d-inline ms-3"><button class="btn btn-sm btn-outline-secondary">Sign out</button></form>}
+</div></header><main id="main" class="workspace">
+@if(TempData["Message"] is string message){<div class="alert alert-success" role="status">@message</div>}
+@if(TempData["Error"] is string error){<div class="alert alert-danger" role="alert">@error</div>}
+@RenderBody()</main><footer>AcxiomCRM · Interview project · All dates use UTC</footer></div></div>
+<script src="/vendor/jquery.min.js"></script><script src="/vendor/jquery.validate.min.js"></script><script src="/vendor/jquery.validate.unobtrusive.min.js"></script><script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts",required:false)
+</body></html>

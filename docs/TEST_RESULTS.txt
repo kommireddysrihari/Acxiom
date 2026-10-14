@@ -1,0 +1,68 @@
+  AcxiomCRM -> /workspace/scratch/f2205e3c5499/AcxiomCRM/bin/Debug/net10.0/AcxiomCRM.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:04.29
+PASS anonymous API access blocked
+PASS admin user administration
+PASS sales cannot access user administration
+PASS sales cannot access audit administration
+PASS customer create
+PASS duplicate customer rejected
+PASS invalid email rejected server-side
+PASS invalid phone rejected server-side
+PASS required name rejected
+PASS sales cannot assign another owner
+PASS cross-owner read blocked
+PASS cross-owner update blocked
+PASS missing antiforgery rejected
+PASS list excludes other owner records
+PASS opportunity rejects amount=0
+PASS opportunity rejects amount=-5
+PASS opportunity rejects probability=101
+PASS opportunity rejects expectedCloseDate=2026-10-12
+PASS valid opportunity create
+PASS past follow-up rejected
+PASS follow-up create
+PASS follow-up completion
+PASS lead create
+PASS conversion cannot be bypassed
+PASS lead transition Contacted
+PASS lead transition Qualified
+PASS transactional lead conversion
+PASS double conversion rejected
+PASS customer edit
+PASS stale update rejected
+PASS stale delete rejected
+PASS page / report /
+PASS page / report /crm/customers
+PASS page / report /crm/leads
+PASS page / report /crm/opportunities
+PASS page / report /crm/followups
+PASS page / report /crm/activities
+PASS page / report /Reports
+PASS page / report /Reports?kind=pipeline
+PASS page / report /Reports?kind=conversion
+PASS page / report /Reports?export=true
+PASS page / report /api/reports/pipeline
+PASS manager business scope
+PASS manager cannot administer security
+PASS manager activity report
+PASS activity create
+PASS activity completion
+PASS activity delete
+PASS deleted activity no longer readable
+PASS mark opportunity won
+PASS won opportunity has actual close timestamp
+PASS temporary customer create
+PASS customer delete
+PASS deactivation revokes existing session
+PASS audit page renders
+PASS audit CSV export
+PASS audit contains business events and excludes test password
+Waiting 61 seconds for the auth rate-limit window before lockout checks…
+PASS five failed logins lock the account
+
+All smoke checks passed. Demo records remain in the local database. Complete the manual browser checklist too.
